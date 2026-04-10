@@ -14,6 +14,9 @@
     --blue: #3B82F6;
     --blue-dim: rgba(59,130,246,0.12);
     --blue-border: rgba(59,130,246,0.28);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.12);
+    --green-border: rgba(34,197,94,0.28);
     --white: #ffffff;
     --muted: rgba(255,255,255,0.42);
     --border: rgba(255,255,255,0.11);
@@ -37,18 +40,38 @@
     text-align: center;
   }
 
-  /* ── Status badge ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.75); }
+  }
+
+  .anim {
+    opacity: 0;
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.3s; }
+  .delay-3 { animation-delay: 0.5s; }
+  .delay-4 { animation-delay: 0.7s; }
+  .delay-5 { animation-delay: 0.9s; }
+
   .badge {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
     padding: 0.3rem 0.75rem;
-    border: 1px solid var(--blue-border);
+    border: 1px solid var(--green-border);
     border-radius: 999px;
-    background: var(--blue-dim);
+    background: var(--green-dim);
     font-size: 0.72rem;
     font-weight: 500;
-    color: var(--blue);
+    color: var(--green);
     letter-spacing: 0.04em;
     text-transform: uppercase;
     margin-bottom: 2rem;
@@ -57,16 +80,10 @@
   .badge-dot {
     width: 6px; height: 6px;
     border-radius: 50%;
-    background: var(--blue);
+    background: var(--green);
     animation: pulse 2s ease-in-out infinite;
   }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.4; transform: scale(0.75); }
-  }
-
-  /* ── Headline ── */
   h1 {
     font-size: clamp(2.4rem, 8vw, 3.5rem);
     font-weight: 600;
@@ -76,9 +93,26 @@
     margin-bottom: 0.65rem;
   }
 
-  h1 span { color: var(--blue); }
+  .code-word {
+    display: inline-block;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(
+      100deg,
+      #3B82F6 0%,
+      #3B82F6 40%,
+      #3B82F6 45%,
+      #3B82F6 50%,
+      #3B82F6 55%,
+      #3B82F6 60%,
+      #3B82F6 100%
+    );
+    background-size: 300% 100%;
+    background-position: 100% 0;
+    will-change: background-image;
+  }
 
-  /* ── Subheadline ── */
   .sub {
     font-size: clamp(0.95rem, 2.5vw, 1.05rem);
     font-weight: 400;
@@ -90,7 +124,6 @@
     margin-right: auto;
   }
 
-  /* ── Pills row — Daniel's style ── */
   .pills {
     display: flex;
     justify-content: center;
@@ -136,9 +169,11 @@
       #285AEB 90%);
   }
 
-  .pill-icon.li {
-    background: #0a66c2;
-    border-radius: 5px;
+  .pill-icon.li { background: #0a66c2; border-radius: 5px; }
+
+  .pill-icon.gh {
+    background: #161b22;
+    border: 1px solid rgba(255,255,255,0.15);
   }
 
   .pill-icon.mail {
@@ -147,14 +182,12 @@
     border-radius: 6px;
   }
 
-  /* ── Footer ── */
   footer {
     font-size: 0.78rem;
     color: rgba(255,255,255,0.2);
     font-weight: 400;
   }
 
-  /* ── Mobile ── */
   @media (max-width: 480px) {
     .page { padding: 2.5rem 1.25rem; }
   }
@@ -163,18 +196,18 @@
 <body>
 <div class="page">
 
-  <div class="badge">
+  <div class="badge anim delay-1">
     <span class="badge-dot"></span>
-    Available for projects
+    Currently employed
   </div>
 
-  <h1>I turn ideas<br>into <span>code.</span></h1>
+  <h1 class="anim delay-2">I turn ideas<br>into <span class="code-word" id="codeWord">code.</span></h1>
 
-  <p class="sub">
+  <p class="sub anim delay-3">
     Developer focused on building clean, functional products. From concept to deployment — I make things work and look good doing it.
   </p>
 
-  <div class="pills">
+  <div class="pills anim delay-4">
 
     <a href="https://www.instagram.com/luishhsantos/" target="_blank" rel="noopener" class="pill">
       <span class="pill-icon ig">
@@ -194,6 +227,15 @@
       @luishhsantos
     </a>
 
+    <a href="https://github.com/Ace0777" target="_blank" rel="noopener" class="pill">
+      <span class="pill-icon gh">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="white">
+          <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+        </svg>
+      </span>
+      Ace0777
+    </a>
+
     <a href="mailto:luishhasantos@gmail.com" class="pill">
       <span class="pill-icon mail">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -206,8 +248,94 @@
 
   </div>
 
-  <footer>© 2025 Luis Henrique</footer>
+  <footer class="anim delay-5">© 2025 Luis Henrique</footer>
 
 </div>
+
+<script>
+  const el = document.getElementById('codeWord');
+
+  const DURATION = 2800; 
+  const PAUSE    = 5000; 
+
+
+  const BASE  = '#3B82F6';
+  const LIGHT = '#a8d4ff';
+  const WHITE = '#ffffff';
+
+  let running   = false;
+  let startTime = null;
+  let rafId     = null;
+
+  function easeInOut(t) {
+    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  }
+
+ 
+  function lerp(a, b, t) {
+    const ah = parseInt(a.slice(1), 16);
+    const bh = parseInt(b.slice(1), 16);
+    const ar = (ah >> 16) & 0xff, ag = (ah >> 8) & 0xff, ab = ah & 0xff;
+    const br = (bh >> 16) & 0xff, bg = (bh >> 8) & 0xff, bb = bh & 0xff;
+    const r  = Math.round(ar + (br - ar) * t);
+    const g  = Math.round(ag + (bg - ag) * t);
+    const b2 = Math.round(ab + (bb - ab) * t);
+    return `rgb(${r},${g},${b2})`;
+  }
+
+  function setGradient(progress) {
+    const center = progress * 1.4 - 0.2; 
+    const half   = 0.12; 
+
+    const p0 = ((center - half) * 100).toFixed(1) + '%';
+    const p1 = ((center - half * 0.3) * 100).toFixed(1) + '%';
+    const p2 = (center * 100).toFixed(1) + '%';
+    const p3 = ((center + half * 0.3) * 100).toFixed(1) + '%';
+    const p4 = ((center + half) * 100).toFixed(1) + '%';
+
+    el.style.backgroundImage = `linear-gradient(
+      100deg,
+      ${BASE}   0%,
+      ${BASE}   ${p0},
+      ${LIGHT}  ${p1},
+      ${WHITE}  ${p2},
+      ${LIGHT}  ${p3},
+      ${BASE}   ${p4},
+      ${BASE}   100%
+    )`;
+  }
+
+  function resetGradient() {
+    el.style.backgroundImage = `linear-gradient(100deg, ${BASE} 0%, ${BASE} 100%)`;
+  }
+
+  function animate(ts) {
+    if (!startTime) startTime = ts;
+    const t = Math.min((ts - startTime) / DURATION, 1);
+    setGradient(easeInOut(t));
+
+    if (t < 1) {
+      rafId = requestAnimationFrame(animate);
+    } else {
+      resetGradient();
+      running   = false;
+      startTime = null;
+      setTimeout(startShine, PAUSE);
+    }
+  }
+
+  function startShine() {
+    if (running) return;
+    running = true;
+    rafId   = requestAnimationFrame(animate);
+  }
+
+
+  setTimeout(startShine, 1800);
+
+  el.addEventListener('mouseenter', startShine);
+
+  el.addEventListener('touchstart', startShine, { passive: true });
+</script>
 </body>
 </html>
